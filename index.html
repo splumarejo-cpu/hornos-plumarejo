@@ -1,0 +1,591 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hornos Plumarejo | El alma de Nápoles en tu cocina</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Lato:wght@300;400;700&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --fire:#E8600A;--fire2:#F5A020;--dark:#0A0603;--dark2:#140C05;
+  --dark3:#1E1208;--cream:#F5F0E8;--muted:#9C8878;--border:rgba(232,96,10,0.18);
+  --gold:#D4A020;
+}
+body{font-family:'Lato',sans-serif;background:var(--dark);color:var(--cream);overflow-x:hidden;scroll-behavior:smooth;}
+
+/* SCROLL REVEAL ANIMATIONS */
+.reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
+.reveal.active { opacity: 1; transform: translateY(0); }
+.delay-1 { transition-delay: 0.1s; }
+.delay-2 { transition-delay: 0.2s; }
+.delay-3 { transition-delay: 0.3s; }
+.delay-4 { transition-delay: 0.4s; }
+
+/* IMAGE PLACEHOLDERS */
+.img-placeholder {
+  width: 100%;
+  background: repeating-linear-gradient(45deg, var(--dark2), var(--dark2) 10px, var(--dark3) 10px, var(--dark3) 20px);
+  border: 1px dashed rgba(232,96,10,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--fire2);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  border-radius: 4px;
+  text-align: center;
+  padding: 2rem;
+  min-height: 250px;
+  position: relative;
+  overflow: hidden;
+}
+.img-placeholder::after { content: attr(data-text); position: relative; z-index: 2; background: var(--dark); padding: 0.5rem 1rem; border-radius: 2px; border: 1px solid var(--border); }
+.img-placeholder.hero-ph { position: absolute; inset: 0; min-height: 100%; opacity: 0.4; z-index: 1; }
+.img-placeholder.model-ph { min-height: 200px; margin-bottom: 1.5rem; border-radius: 2px; }
+
+/* NAV */
+nav{position:fixed;top:0;width:100%;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:1rem 2.5rem;background:rgba(10,6,3,0.85);border-bottom:1px solid var(--border);backdrop-filter:blur(12px); transition: all 0.3s;}
+nav.scrolled { padding: 0.7rem 2.5rem; background:rgba(10,6,3,0.95); }
+.nav-logo{display:flex;align-items:center;gap:0.7rem;cursor:pointer;}
+.nav-logo-icon{width:36px;height:36px; transition: transform 0.3s;}
+.nav-logo:hover .nav-logo-icon{transform: scale(1.1) rotate(5deg);}
+.nav-brand{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--fire2);letter-spacing:0.04em;}
+.nav-brand span{color:var(--cream);font-weight:400;}
+.nav-links{display:flex;gap:1.8rem;list-style:none;align-items:center;}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:0.8rem;letter-spacing:0.14em;text-transform:uppercase;transition:color 0.3s;cursor:pointer;}
+.nav-links a:hover, .nav-links a.active{color:var(--fire2);}
+.nav-cta{background:var(--fire)!important;color:white!important;padding:0.45rem 1.3rem;border-radius:2px;font-weight:700!important;}
+.nav-cta:hover{background:var(--fire2)!important;color:var(--dark)!important; box-shadow: 0 0 15px rgba(232,96,10,0.4);}
+.menu-toggle { display: none; color: var(--fire2); font-size: 1.5rem; cursor: pointer; }
+
+/* SECTIONS */
+.section{padding:6rem 2.5rem;max-width:1150px;margin:0 auto;}
+.eyebrow{display:inline-flex;align-items:center;gap:0.5rem;color:var(--fire2);font-size:0.7rem;letter-spacing:0.22em;text-transform:uppercase;font-weight:700;margin-bottom:1rem;}
+.eyebrow::before{content:'';width:22px;height:1px;background:var(--fire2);}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,4vw,3.2rem);font-weight:700;line-height:1.15;margin-bottom:1rem;}
+.section-sub{font-size:1rem;color:var(--muted);line-height:1.85;max-width:600px;font-weight:300;}
+.divider{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:0 2.5rem;}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;padding:6rem 2.5rem 4rem;position:relative;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 65% 50%,rgba(232,96,10,0.16) 0%,transparent 60%),radial-gradient(ellipse at 15% 75%,rgba(245,160,32,0.06) 0%,transparent 50%),var(--dark); z-index: 2;}
+.fire-orb{position:absolute;right:6%;top:50%;transform:translateY(-50%);width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(232,96,10,0.25) 0%,rgba(245,160,32,0.08) 45%,transparent 70%);animation:pulseOrb 4s ease-in-out infinite; z-index: 2;}
+@keyframes pulseOrb{0%,100%{transform:translateY(-50%) scale(1);opacity:.75;}50%{transform:translateY(-50%) scale(1.1);opacity:1;}}
+.hero-content{position:relative;z-index:3;max-width:650px;}
+.hero-tag{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(232,96,10,0.12);border:1px solid rgba(232,96,10,0.3);padding:0.4rem 1rem;border-radius:2px;font-size:0.75rem;color:var(--fire2);letter-spacing:0.14em;text-transform:uppercase;font-weight:700;margin-bottom:2rem;}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(3.5rem,7vw,5.5rem);font-weight:900;line-height:1.05;margin-bottom:1.5rem;}
+.hero-title .hl{color:var(--fire);font-style:italic;}
+.hero-sub{font-size:1.1rem;color:var(--cream);line-height:1.8;max-width:550px;margin-bottom:2.5rem;font-weight:300; text-shadow: 0 2px 4px rgba(0,0,0,0.5);}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;}
+.btn-p{background:var(--fire);color:white;padding:.9rem 2.2rem;border:none;border-radius:2px;font-family:'Lato',sans-serif;font-size:.85rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;transition:all .3s; position:relative; overflow:hidden;}
+.btn-p::before { content:''; position:absolute; top:0; left:-100%; width:100%; height:100%; background:linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent); transition: left 0.5s; }
+.btn-p:hover::before { left: 100%; }
+.btn-p:hover{background:var(--fire2);color:var(--dark);transform:translateY(-2px); box-shadow: 0 10px 20px rgba(232,96,10,0.2);}
+.btn-g{background:rgba(10,6,3,0.5);color:var(--cream);padding:.9rem 2.2rem;border:1px solid rgba(245,240,232,.3);border-radius:2px;font-family:'Lato',sans-serif;font-size:.85rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;transition:all .3s; backdrop-filter:blur(5px);}
+.btn-g:hover{border-color:var(--fire);color:var(--fire2); background:rgba(232,96,10,0.05);}
+.hero-stats{display:flex;gap:3rem;margin-top:4rem;padding-top:2rem;border-top:1px solid rgba(255,255,255,.1);}
+.stat-n{font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:700;color:var(--fire2);display:block;line-height:1;}
+.stat-l{font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.13em;font-weight:700;margin-top:.4rem;display:block;}
+
+/* NOSOTROS SPLIT */
+.nosotros-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+.porque-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:2.8rem;}
+@media(max-width:900px){ .nosotros-wrap { grid-template-columns: 1fr; } .porque-grid { grid-template-columns: 1fr; } }
+.porque-item{display:flex;gap:1rem;align-items:flex-start;padding:1.5rem;background:var(--dark2);border:1px solid var(--border);border-radius:4px;transition:all .3s;}
+.porque-item:hover{border-color:rgba(232,96,10,.5); transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); background: linear-gradient(145deg, var(--dark2), rgba(232,96,10,0.03));}
+.p-icon{width:42px;height:42px;border-radius:2px;background:rgba(232,96,10,.1);border:1px solid rgba(232,96,10,.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.2rem;}
+.p-text h4{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--cream);margin-bottom:.4rem;}
+.p-text p{font-size:.85rem;color:var(--muted);line-height:1.7;font-weight:300;}
+
+/* SPECS TABLE */
+.specs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.2rem;margin-top:2.5rem;}
+.spec-card{background:var(--dark2);border:1px solid var(--border);border-radius:4px;padding:1.5rem; transition: border-color 0.3s;}
+.spec-card:hover{border-color:var(--fire2);}
+.spec-label{font-size:.7rem;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);font-weight:700;margin-bottom:.5rem;}
+.spec-val{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--fire2);}
+.spec-note{font-size:.8rem;color:var(--muted);margin-top:.4rem;font-weight:300; line-height:1.5;}
+
+/* MODELOS */
+.models-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.8rem;margin-top:3rem;}
+.model-card{background:var(--dark2);border:1px solid var(--border);border-radius:4px;padding:2rem 1.5rem;position:relative;overflow:hidden;transition:all .4s;cursor:pointer;}
+.model-card::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--fire);transform:scaleX(0);transition:transform .4s; transform-origin: left;}
+.model-card:hover{border-color:rgba(232,96,10,.5);transform:translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.3);}
+.model-card:hover::after{transform:scaleX(1);}
+.model-card.feat{border-color:rgba(232,96,10,.5);background:linear-gradient(160deg,var(--dark2),rgba(232,96,10,.08));}
+.model-card.feat::after{transform:scaleX(1);}
+.m-badge{display:inline-block;font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.25rem .75rem;border-radius:2px;margin-bottom:1rem;}
+.m-badge.fire{background:var(--fire);color:white;}
+.m-badge.outline{background:transparent;border:1px solid var(--fire);color:var(--fire2);}
+.m-name{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:var(--cream);margin-bottom:.3rem;}
+.m-size{font-size:.8rem;color:var(--fire2);font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:1.2rem;}
+.m-desc{font-size:.9rem;color:var(--muted);line-height:1.7;margin-bottom:1.5rem;font-weight:300;}
+.m-feats{list-style:none;display:flex;flex-direction:column;gap:.6rem;}
+.m-feats li{font-size:.85rem;color:var(--muted);display:flex;align-items:center;gap:.6rem;}
+.m-feats li::before{content:'';width:4px;height:4px;background:var(--fire);border-radius:50%;flex-shrink:0;}
+.m-peso{margin-top:1.5rem;padding-top:1rem;border-top:1px solid var(--border);font-size:.75rem;color:var(--muted);font-weight:300;}
+.m-peso span{color:var(--fire2);font-weight:700;}
+
+/* GALERIA */
+.gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; margin-top: 3rem; }
+
+/* PROCESO */
+.proceso-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2rem;margin-top:3rem;}
+.paso{padding-left:1.5rem;border-left:1px solid var(--border); position:relative;}
+.paso::before { content:''; position:absolute; left:-4px; top:15px; width:7px; height:7px; background:var(--fire); border-radius:50%; transition: transform 0.3s;}
+.paso:hover::before { transform: scale(1.5); background: var(--fire2); }
+.paso-num{font-family:'Playfair Display',serif;font-size:3.5rem;font-weight:900;color:rgba(232,96,10,.1);line-height:1;margin-bottom:.5rem;}
+.paso-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--cream);margin-bottom:.5rem;}
+.paso-desc{font-size:.9rem;color:var(--muted);line-height:1.7;font-weight:300; margin-bottom: 1.5rem;}
+.paso-img{width: 100%; height: 180px; object-fit: cover; border-radius: 4px; border: 1px solid var(--border); transition: transform 0.3s;}
+.paso:hover .paso-img{transform: scale(1.02); border-color: var(--fire2);}
+
+/* TECH STRIP */
+.tech-strip{background:var(--dark3);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:3.5rem 2.5rem;}
+.tech-inner{max-width:1150px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:2rem;}
+.tech-item{text-align:center;}
+.tech-num{font-family:'Playfair Display',serif;font-size:2.8rem;font-weight:700;color:var(--fire2);display:block;}
+.tech-label{font-size:.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:.13em;font-weight:700; margin-top: 0.5rem; display: block;}
+
+/* CTA BAND */
+.cta-band{background:linear-gradient(135deg,var(--dark3),rgba(232,96,10,.08));border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:6rem 2.5rem;text-align:center; position:relative; overflow:hidden;}
+.cta-band::after { content:''; position:absolute; top:-50%; left:-50%; width:200%; height:200%; background:radial-gradient(circle, rgba(245,160,32,0.05) 0%, transparent 60%); z-index:1; pointer-events:none;}
+.cta-band h2{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,2.8rem);font-weight:700;margin-bottom:1.5rem; position:relative; z-index:2;}
+.cta-band p{color:var(--muted);font-size:1.05rem;margin-bottom:2.5rem;font-weight:300; position:relative; z-index:2;}
+
+/* CONTACT */
+.contact-wrap{display:grid;grid-template-columns:1fr 1fr;gap:4rem;margin-top:3rem;}
+.c-info h3{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;margin-bottom:1rem;}
+.c-info p{font-size:.95rem;color:var(--muted);line-height:1.8;font-weight:300;margin-bottom:2rem;}
+.c-item{display:flex;align-items:center;gap:.8rem;margin-bottom:1rem;font-size:.9rem;color:var(--muted);}
+.c-icon{width:32px;height:32px;border-radius:2px;background:rgba(232,96,10,.1);border:1px solid rgba(232,96,10,.25);display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0;}
+.c-form{display:flex;flex-direction:column;gap:1.2rem; background: var(--dark3); padding: 2.5rem; border: 1px solid var(--border); border-radius: 4px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;}
+.fg{display:flex;flex-direction:column;gap:.5rem;}
+.fg label{font-size:.7rem;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);font-weight:700;}
+.fg input,.fg select,.fg textarea{background:var(--dark2);border:1px solid rgba(255,255,255,.08);border-radius:2px;color:var(--cream);font-family:'Lato',sans-serif;font-size:.9rem;padding:.8rem 1rem;outline:none;transition:border .3s, box-shadow .3s;font-weight:300;}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--fire); box-shadow: 0 0 8px rgba(232,96,10,0.2);}
+.fg select option{background:var(--dark2);}
+.fg textarea{resize:vertical;min-height:120px;}
+
+/* FLOATING WPP */
+.float-wa { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: #25D366; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4); z-index: 999; text-decoration: none; transition: transform 0.3s; }
+.float-wa:hover { transform: scale(1.1); }
+.float-wa svg { width: 32px; height: 32px; fill: currentColor; }
+
+/* FOOTER */
+footer{padding:2.5rem 2.5rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1.5rem; background: var(--dark3);}
+.f-logo{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--fire2);}
+.f-copy{font-size:.8rem;color:var(--muted);font-weight:300;}
+.f-links{display:flex;gap:1.5rem;}
+.f-links a{font-size:.8rem;color:var(--muted);text-decoration:none;transition:color .3s;cursor:pointer; text-transform: uppercase; letter-spacing: 0.1em;}
+.f-links a:hover{color:var(--fire2);}
+
+/* RESPONSIVE */
+@media(max-width:850px){
+  .nav-links { display: none; position: absolute; top: 100%; left: 0; width: 100%; background: rgba(10,6,3,0.98); flex-direction: column; padding: 2rem; border-bottom: 1px solid var(--border); }
+  .nav-links.show { display: flex; }
+  .menu-toggle { display: block; }
+  .hero-stats{flex-wrap:wrap;gap:2rem;}
+  .contact-wrap{grid-template-columns:1fr;}
+  .form-row{grid-template-columns:1fr;}
+  .section { padding: 4rem 1.5rem; }
+  .hero { padding: 6rem 1.5rem 4rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- FLOATING WA -->
+<a href="https://wa.me/528134575939" target="_blank" class="float-wa" title="Escríbenos por WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-logo" onclick="go('inicio')">
+    <img src="Logo Frontal Hornos Plumarejo.png" alt="Logo Hornos Plumarejo" style="height: 60px; width: auto;">
+    <div class="nav-brand" style="display: none;">Hornos <span>Plumarejo</span></div>
+  </div>
+  <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+  <ul class="nav-links" id="nav-links">
+    <li><a onclick="go('nosotros')" class="nav-item">Nosotros</a></li>
+    <li><a onclick="go('modelos')" class="nav-item">Modelos</a></li>
+    <li><a onclick="go('galeria')" class="nav-item">Galería</a></li>
+    <li><a onclick="go('proceso')" class="nav-item">Proceso</a></li>
+    <li><a class="nav-cta" onclick="go('contacto')">Cotizar</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero" id="inicio">
+  <div class="hero-bg"></div>
+  <img src="Semproniano 2 120 Cm/IMG_20220414_195449539.jpg" class="hero-ph" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.35; z-index: 1;" alt="Horno Plumarejo Premium">
+  <div class="fire-orb"></div>
+  <div class="hero-content reveal">
+    <div class="hero-tag">Fabricantes artesanales · Monterrey, N.L.</div>
+    <h1 class="hero-title">El alma de<br><span class="hl">Nápoles</span><br>en tu cocina</h1>
+    <p class="hero-sub">Hornos refractarios tipo napolitano construidos a mano, ladrillo por ladrillo. Híbridos Gas/Leña, capaces de alcanzar hasta 1,200°C. Para la pizza perfecta y el asado que no tiene comparación.</p>
+    <div class="hero-btns">
+      <button class="btn-p" onclick="go('modelos')">Ver modelos</button>
+      <button class="btn-g" onclick="go('contacto')">Solicitar cotización</button>
+    </div>
+    <div class="hero-stats">
+      <div><span class="stat-n">4</span><span class="stat-l">Modelos disponibles</span></div>
+      <div><span class="stat-n">1,200°C</span><span class="stat-l">Temperatura máxima</span></div>
+      <div><span class="stat-n">4.5 T</span><span class="stat-l">Peso máximo modelo</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- TECH STRIP -->
+<div class="tech-strip">
+  <div class="tech-inner">
+    <div class="tech-item reveal"><span class="tech-num">Gas/Leña</span><span class="tech-label">Modo híbrido</span></div>
+    <div class="tech-item reveal delay-1"><span class="tech-num">Granito</span><span class="tech-label">Cubiertas incluidas</span></div>
+    <div class="tech-item reveal delay-2"><span class="tech-num">Mosaico</span><span class="tech-label">Exterior personalizable</span></div>
+    <div class="tech-item reveal delay-3"><span class="tech-num">Acero</span><span class="tech-label">Puerta forjada a mano</span></div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- NOSOTROS -->
+<section class="section" id="nosotros">
+  <div class="nosotros-wrap">
+    <div class="reveal">
+      <div class="eyebrow">Quiénes somos</div>
+      <h2 class="section-title">Artesanos del fuego,<br>no fabricantes en serie</h2>
+      <p class="section-sub">Somos un taller regiomontano fundado y operado por el Ing. Samuel Plumarejo Copado. Cada horno sale de nuestras manos con materiales validados técnicamente: ladrillo refractario de alta densidad, Mortero Óptimo Cemex y aislamiento multicapa que garantiza eficiencia real durante generaciones.</p>
+      
+      <div class="porque-grid">
+        <div class="porque-item">
+          <div class="p-icon">🧱</div>
+          <div class="p-text"><h4>Ladrillo certificado</h4><p>Barro natural a 1,000°C con ficha técnica NOM.</p></div>
+        </div>
+        <div class="porque-item">
+          <div class="p-icon">🔥</div>
+          <div class="p-text"><h4>Hasta 1,200°C</h4><p>Pizza napolitana auténtica en 90 segundos.</p></div>
+        </div>
+        <div class="porque-item">
+          <div class="p-icon">⚖️</div>
+          <div class="p-text"><h4>Granito o Mármol</h4><p>Incluidas en todas las plataformas de trabajo.</p></div>
+        </div>
+        <div class="porque-item">
+          <div class="p-icon">🚚</div>
+          <div class="p-text"><h4>Instalación</h4><p>Coordinamos maniobras con grúa especializada.</p></div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="reveal delay-2">
+      <img src="Semproniano 1 80 cm/IMG_20210318_155047749.jpg" style="width: 100%; height: 500px; object-fit: cover; border-radius: 8px; border: 1px solid var(--border);" alt="Ing. Samuel Plumarejo trabajando">
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- MODELOS -->
+<section class="section" id="modelos">
+  <div class="reveal">
+    <div class="eyebrow">Catálogo</div>
+    <h2 class="section-title">Elige tu horno</h2>
+    <p class="section-sub">Cuatro modelos con carácter propio. Desde el patio residencial hasta la pizzería industrial. Todos con la misma calidad de construcción.</p>
+  </div>
+
+  <div class="models-grid">
+    <!-- Modelo 1 -->
+    <div class="model-card reveal delay-1" onclick="go('contacto')">
+      <img src="Semproniano 1 80 cm/IMG-20210415-WA0041.jpg" class="model-ph" style="width: 100%; height: 220px; object-fit: cover; border-radius: 4px; margin-bottom: 1.5rem;" alt="Horno El Padre 80cm">
+      <div class="m-badge outline">Residencial</div>
+      <div class="m-name">El Padre</div>
+      <div class="m-size">80 cm · 31.5" diámetro interno</div>
+      <p class="m-desc">El horno perfecto para el patio. Compacto, robusto y capaz de producir pizzas de nivel profesional en reuniones familiares.</p>
+      <ul class="m-feats">
+        <li>Ideal para jardines residenciales</li>
+        <li>Hasta 2–3 pizzas simultáneas</li>
+        <li>Exterior en mosaico personalizable</li>
+      </ul>
+      <p class="m-peso">Peso nominal: <span>~1.5 toneladas</span></p>
+    </div>
+
+    <!-- Modelo 2 -->
+    <div class="model-card feat reveal delay-2" onclick="go('contacto')">
+      <img src="El padrino/IMG_20220916_182121915_MF_PORTRAIT.jpg" class="model-ph" style="width: 100%; height: 220px; object-fit: cover; border-radius: 4px; margin-bottom: 1.5rem;" alt="Horno Padrino 100cm">
+      <div class="m-badge fire">Más popular</div>
+      <div class="m-name">Padrino</div>
+      <div class="m-size">100 cm · 39.3" diámetro interno</div>
+      <p class="m-desc">El equilibrio perfecto entre potencia y tamaño. Favorito de parrilleros exigentes y negocios pequeños que no aceptan mediocridad.</p>
+      <ul class="m-feats">
+        <li>Para el parrillero exigente</li>
+        <li>Hasta 4 pizzas simultáneas</li>
+        <li>Puerta de hierro forjado</li>
+      </ul>
+      <p class="m-peso">Peso nominal: <span>~2.5 toneladas</span></p>
+    </div>
+
+    <!-- Modelo 3 -->
+    <div class="model-card reveal delay-3" onclick="go('contacto')">
+      <img src="Semproniano 2 120 Cm/IMG_20220414_163212633_HDR.jpg" class="model-ph" style="width: 100%; height: 220px; object-fit: cover; border-radius: 4px; margin-bottom: 1.5rem;" alt="Horno Semproniano 120cm">
+      <div class="m-badge outline">Semipro</div>
+      <div class="m-name">Semproniano</div>
+      <div class="m-size">120 cm · 47.2" diámetro interno</div>
+      <p class="m-desc">Capacidad híbrida — sirve a la familia grande el domingo y al negocio de pizzas entre semana. Cúpula napolitana.</p>
+      <ul class="m-feats">
+        <li>Familia grande o negocio inicial</li>
+        <li>Hasta 6 pizzas simultáneas</li>
+        <li>Disponible en talavera artesanal</li>
+      </ul>
+      <p class="m-peso">Peso nominal: <span>~3.5 toneladas</span></p>
+    </div>
+
+    <!-- Modelo 4 -->
+    <div class="model-card reveal delay-4" onclick="go('contacto')">
+      <img src="Semproniano 3 con remolque 150 cm/IMG_20230705_232642566_MF_PORTRAIT.jpg" class="model-ph" style="width: 100%; height: 220px; object-fit: cover; border-radius: 4px; margin-bottom: 1.5rem; object-position: center 20%;" alt="Horno Grosseto 150cm">
+      <div class="m-badge outline">Industrial</div>
+      <div class="m-name">Grosseto</div>
+      <div class="m-size">150 cm · 59" diámetro interno</div>
+      <p class="m-desc">Potencia profesional para pizzerías y restaurantes de alto volumen. Instalación con grúa. El más imponente.</p>
+      <ul class="m-feats">
+        <li>Para restaurantes y pizzerías</li>
+        <li>8+ pizzas simultáneas</li>
+        <li>Extracción de humo premium</li>
+      </ul>
+      <p class="m-peso">Peso nominal: <span>~4.5 toneladas</span></p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- REMOLQUES -->
+<section class="section" id="remolques" style="background: var(--neutral-100);">
+  <div class="reveal" style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
+    <div class="eyebrow">Proyectos Especiales</div>
+    <h2 class="section-title">Hornos Móviles y Food Trucks</h2>
+    <p class="section-sub">Llevamos el peso y la potencia de un horno napolitano a donde lo necesites. Adaptamos e instalamos hornos de hasta 150 cm sobre remolques reforzados, listos para operar a nivel comercial con la máxima seguridad estructural.</p>
+    
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-top: 3rem;">
+      <img src="Semproniano 3 con remolque 150 cm/IMG_20230705_232858454~2.jpg" style="width: 100%; height: 350px; object-fit: cover; border-radius: 4px;" alt="Food Truck Exterior Taste of Tuscany">
+      <img src="Semproniano 3 con remolque 150 cm/IMG_20230705_232642566_MF_PORTRAIT.jpg" style="width: 100%; height: 350px; object-fit: cover; border-radius: 4px; object-position: center 30%;" alt="Horno 150cm interior remolque">
+      <img src="Semproniano 3 con remolque 150 cm/IMG-20230701-WA0074.jpeg" style="width: 100%; height: 350px; object-fit: cover; border-radius: 4px;" alt="Construcción Food truck y ventanas">
+      <img src="Semproniano 3 con remolque 150 cm/IMG_20221201_105945787.jpg" style="width: 100%; height: 350px; object-fit: cover; border-radius: 4px;" alt="Base de acero pesado para remolque">
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- GALERIA (NUEVA SECCIÓN) -->
+<section class="section" id="galeria">
+  <div class="reveal">
+    <div class="eyebrow">Nuestro Trabajo</div>
+    <h2 class="section-title">El arte en detalle</h2>
+    <p class="section-sub">Explora la calidad de nuestros acabados, los materiales que utilizamos y los resultados finales en las casas y negocios de nuestros clientes.</p>
+  </div>
+  
+  <div class="gallery-albums reveal delay-1" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem;">
+    <!-- Album 1 -->
+    <a href="galeria_remolques.html" class="album-card" style="text-decoration: none; display: block; border-radius: 8px; overflow: hidden; background: #222; transition: transform 0.3s ease;">
+      <div style="height: 250px; overflow: hidden;">
+        <img src="Semproniano 3 con remolque 150 cm/IMG_20230705_232858454~2.jpg" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;" class="album-img" alt="Food Trucks">
+      </div>
+      <div style="padding: 1.5rem;">
+        <h3 style="color: var(--primary); font-size: 1.2rem; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 1px;">Food Trucks y Remolques</h3>
+        <p style="color: #aaa; font-size: 0.9rem;">Ver galería completa (Proyectos 150cm)</p>
+      </div>
+    </a>
+    
+    <!-- Album 2 -->
+    <a href="galeria_comercial.html" class="album-card" style="text-decoration: none; display: block; border-radius: 8px; overflow: hidden; background: #222; transition: transform 0.3s ease;">
+      <div style="height: 250px; overflow: hidden;">
+        <img src="Semproniano 2 120 Cm/IMG_20220414_163212633_HDR.jpg" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;" class="album-img" alt="Comercial">
+      </div>
+      <div style="padding: 1.5rem;">
+        <h3 style="color: var(--primary); font-size: 1.2rem; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 1px;">Uso Comercial</h3>
+        <p style="color: #aaa; font-size: 0.9rem;">Ver galería completa (Proyectos 120cm)</p>
+      </div>
+    </a>
+
+    <!-- Album 3 -->
+    <a href="galeria_residencial.html" class="album-card" style="text-decoration: none; display: block; border-radius: 8px; overflow: hidden; background: #222; transition: transform 0.3s ease;">
+      <div style="height: 250px; overflow: hidden;">
+        <img src="Semproniano 1 80 cm/IMG_20210330_105332523.jpg" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;" class="album-img" alt="Residencial">
+      </div>
+      <div style="padding: 1.5rem;">
+        <h3 style="color: var(--primary); font-size: 1.2rem; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 1px;">Uso Residencial</h3>
+        <p style="color: #aaa; font-size: 0.9rem;">Ver galería completa (Proyectos 80cm y 100cm)</p>
+      </div>
+    </a>
+  </div>
+  
+  <style>
+    .album-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+    .album-card:hover .album-img { transform: scale(1.05); }
+  </style>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROCESO -->
+<section class="section" id="proceso">
+  <div class="reveal">
+    <div class="eyebrow">Cómo lo hacemos</div>
+    <h2 class="section-title">Del acero crudo<br>al horno perfecto</h2>
+    <p class="section-sub">Cada horno pasa por semanas de trabajo artesanal. Este es el proceso que garantiza que dure generaciones y funcione como el primer día.</p>
+  </div>
+
+  <div class="proceso-grid">
+    <div class="paso reveal">
+      <div class="paso-num">01</div>
+      <div class="paso-title">Base y Estructura</div>
+      <p class="paso-desc">Base metálica de acero al carbón soldada a mano, garantizando soporte estructural absoluto.</p>
+      <img src="Semproniano 3 con remolque 150 cm/IMG_20221201_145503027.jpg" class="paso-img" alt="Estructura de acero">
+    </div>
+    <div class="paso reveal delay-1">
+      <div class="paso-num">02</div>
+      <div class="paso-title">Piso refractario</div>
+      <p class="paso-desc">Ladrillo certificado colocado con precisión milimétrica, diseñado para retención térmica y pizzas perfectas.</p>
+      <img src="Semproniano 2 120 Cm/IMG_20211227_211249160.jpg" class="paso-img" alt="Piso refractario">
+    </div>
+    <div class="paso reveal delay-2">
+      <div class="paso-num">03</div>
+      <div class="paso-title">Cúpula napolitana</div>
+      <p class="paso-desc">Ladrillo sobre ladrillo con Mortero Óptimo, calculada para una distribución de calor inmejorable.</p>
+      <img src="Semproniano 2 120 Cm/IMG_20220303_192733482.jpg" class="paso-img" alt="Cúpula de ladrillo">
+    </div>
+    <div class="paso reveal delay-3">
+      <div class="paso-num">04</div>
+      <div class="paso-title">Acabado Artesanal</div>
+      <p class="paso-desc">Recubrimiento térmico multicapa y mosaico instalado a mano para una estética premium.</p>
+      <img src="Semproniano 3 con remolque 150 cm/IMG-20230531-WA0118.jpeg" class="paso-img" alt="Acabado Mosaico">
+    </div>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<div class="cta-band reveal">
+  <h2>¿Listo para tu horno ideal?</h2>
+  <p>Cotización personalizada sin costo. Respuesta rápida y atención directa del ingeniero.</p>
+  <button class="btn-p" onclick="go('contacto')">Solicitar cotización gratuita</button>
+</div>
+
+<!-- CONTACTO -->
+<section class="section" id="contacto">
+  <div class="reveal">
+    <div class="eyebrow">Contáctanos</div>
+    <h2 class="section-title">Cotiza tu horno</h2>
+  </div>
+
+  <div class="contact-wrap">
+    <div class="c-info reveal delay-1">
+      <h3>Hablemos de tu proyecto</h3>
+      <p>Somos fabricantes directos en Monterrey. Sin intermediarios, sin precios inflados. Cuéntanos qué buscas y te asesoramos para el modelo ideal.</p>
+
+      <div class="c-item"><div class="c-icon">📍</div>Calle Julio A. Roca 9417, Fomerrey 87<br>Monterrey, Nuevo León, México</div>
+      <div class="c-item"><div class="c-icon">📱</div>Ing. Samuel Plumarejo · <strong style="color:var(--fire2)">813-457-5939</strong></div>
+      <div class="c-item"><div class="c-icon">📧</div>splumarejo@gmail.com</div>
+      <div class="c-item"><div class="c-icon">⏱</div>Fabricación: 2 meses promedio · Envíos a todo México</div>
+      
+      <img src="Logo Frontal Hornos Plumarejo.png" style="margin-top: 2rem; width: 100%; height: auto; border-radius: 4px; border: 1px solid var(--border); background: var(--dark3); padding: 2rem;" alt="Sello de Calidad Hornos Plumarejo">
+    </div>
+
+    <div class="c-form reveal delay-2">
+      <div class="form-row">
+        <div class="fg"><label>Nombre</label><input type="text" placeholder="Tu nombre completo"></div>
+        <div class="fg"><label>Teléfono / WhatsApp</label><input type="tel" placeholder="+52 81..."></div>
+      </div>
+      <div class="fg"><label>Correo electrónico</label><input type="email" placeholder="correo@ejemplo.com"></div>
+      <div class="fg">
+        <label>Modelo de interés</label>
+        <select>
+          <option value="">Selecciona un modelo</option>
+          <option>El Padre — 80 cm (Residencial)</option>
+          <option>Padrino — 100 cm (El más popular)</option>
+          <option>Semproniano — 120 cm (Semipro)</option>
+          <option>Grosseto — 150 cm (Industrial)</option>
+          <option>No sé aún, necesito asesoría</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label>Uso del horno</label>
+        <select>
+          <option value="">¿Para qué lo necesitas?</option>
+          <option>Uso residencial / patio personal</option>
+          <option>Pizzería o restaurante</option>
+          <option>Negocio de catering / eventos</option>
+          <option>Otro uso</option>
+        </select>
+      </div>
+      <div class="fg"><label>Cuéntanos tu proyecto</label><textarea placeholder="¿Tienes espacio definido? ¿Necesitas instalación con grúa? ¿Decorado especial? Cualquier detalle nos ayuda a cotizar mejor..."></textarea></div>
+      <button class="btn-p" style="width:100%;padding:1.2rem;font-size:.9rem;margin-top:1rem;">Enviar solicitud de cotización</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="f-logo">Hornos Plumarejo</div>
+  <div class="f-copy">© 2025 · Ing. Samuel Plumarejo Copado · RFC: PUCS860910BW9 · Monterrey, N.L.</div>
+  <div class="f-links">
+    <a>Instagram</a>
+    <a>Facebook</a>
+    <a href="https://wa.me/528134575939" target="_blank">WhatsApp</a>
+    <a href="https://maps.app.goo.gl/qva3fmSia2y2hoKd7" target="_blank">Ver taller</a>
+  </div>
+</footer>
+
+<script>
+// Navegación suave
+function go(id){
+  const el = document.getElementById(id);
+  if(el) {
+    const navHeight = document.querySelector('nav').offsetHeight;
+    const top = el.offsetTop - navHeight;
+    window.scrollTo({ top, behavior: 'smooth' });
+    // Ocultar menú en móvil al hacer clic
+    document.getElementById('nav-links').classList.remove('show');
+  }
+}
+
+// Menú móvil
+function toggleMenu() {
+  document.getElementById('nav-links').classList.toggle('show');
+}
+
+// Cambiar estilo de nav al hacer scroll
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('navbar');
+  if (window.scrollY > 50) nav.classList.add('scrolled');
+  else nav.classList.remove('scrolled');
+});
+
+// Animaciones de revelado al hacer scroll (Intersection Observer)
+document.addEventListener('DOMContentLoaded', () => {
+  const observerOptions = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.15
+  };
+
+  const observer = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  document.querySelectorAll('.reveal').forEach(el => {
+    observer.observe(el);
+  });
+});
+</script>
+</body>
+</html>
