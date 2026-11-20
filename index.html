@@ -11,7 +11,7 @@
 :root{
   --fire:#E8600A;--fire2:#F5A020;--dark:#0A0603;--dark2:#140C05;
   --dark3:#1E1208;--cream:#F5F0E8;--muted:#9C8878;--border:rgba(232,96,10,0.18);
-  --gold:#D4A020;
+  --gold:#D4A020;--primary:#ff6b35;--neutral-100:#140C05;
 }
 body{font-family:'Lato',sans-serif;background:var(--dark);color:var(--cream);overflow-x:hidden;scroll-behavior:smooth;}
 
@@ -169,6 +169,10 @@ nav.scrolled { padding: 0.7rem 2.5rem; background:rgba(10,6,3,0.95); }
 .fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--fire); box-shadow: 0 0 8px rgba(232,96,10,0.2);}
 .fg select option{background:var(--dark2);}
 .fg textarea{resize:vertical;min-height:120px;}
+.form-status{display:none;padding:.9rem 1rem;border-radius:3px;font-size:.88rem;line-height:1.5;margin-top:.3rem;}
+.form-status.ok{background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.45);color:#d1fae5;}
+.form-status.warn{background:rgba(245,160,32,.12);border:1px solid rgba(245,160,32,.45);color:var(--cream);}
+.form-status.err{background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.45);color:#fecaca;}
 
 /* FLOATING WPP */
 .float-wa { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: #25D366; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4); z-index: 999; text-decoration: none; transition: transform 0.3s; }
@@ -495,36 +499,39 @@ footer{padding:2.5rem 2.5rem;border-top:1px solid var(--border);display:flex;jus
       <img src="Logo Frontal Hornos Plumarejo.png" style="margin-top: 2rem; width: 100%; height: auto; border-radius: 4px; border: 1px solid var(--border); background: var(--dark3); padding: 2rem;" alt="Sello de Calidad Hornos Plumarejo">
     </div>
 
-    <div class="c-form reveal delay-2">
+    <form id="cotizar-form" name="cotizacion" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="c-form reveal delay-2">
+      <input type="hidden" name="form-name" value="cotizacion">
+      <p hidden><label>No llenar: <input name="bot-field"></label></p>
       <div class="form-row">
-        <div class="fg"><label>Nombre</label><input type="text" placeholder="Tu nombre completo"></div>
-        <div class="fg"><label>Teléfono / WhatsApp</label><input type="tel" placeholder="+52 81..."></div>
+        <div class="fg"><label for="c-nombre">Nombre</label><input id="c-nombre" name="nombre" type="text" placeholder="Tu nombre completo" required></div>
+        <div class="fg"><label for="c-telefono">Teléfono / WhatsApp</label><input id="c-telefono" name="telefono" type="tel" placeholder="+52 81..." required></div>
       </div>
-      <div class="fg"><label>Correo electrónico</label><input type="email" placeholder="correo@ejemplo.com"></div>
+      <div class="fg"><label for="c-correo">Correo electrónico</label><input id="c-correo" name="correo" type="email" placeholder="correo@ejemplo.com"></div>
       <div class="fg">
-        <label>Modelo de interés</label>
-        <select>
+        <label for="c-modelo">Modelo de interés</label>
+        <select id="c-modelo" name="modelo">
           <option value="">Selecciona un modelo</option>
-          <option>El Padre — 80 cm (Residencial)</option>
-          <option>Padrino — 100 cm (El más popular)</option>
-          <option>Semproniano — 120 cm (Semipro)</option>
-          <option>Grosseto — 150 cm (Industrial)</option>
-          <option>No sé aún, necesito asesoría</option>
+          <option value="El Padre — 80 cm (Residencial)">El Padre — 80 cm (Residencial)</option>
+          <option value="Padrino — 100 cm (El más popular)">Padrino — 100 cm (El más popular)</option>
+          <option value="Semproniano — 120 cm (Semipro)">Semproniano — 120 cm (Semipro)</option>
+          <option value="Grosseto — 150 cm (Industrial)">Grosseto — 150 cm (Industrial)</option>
+          <option value="No sé aún, necesito asesoría">No sé aún, necesito asesoría</option>
         </select>
       </div>
       <div class="fg">
-        <label>Uso del horno</label>
-        <select>
+        <label for="c-uso">Uso del horno</label>
+        <select id="c-uso" name="uso">
           <option value="">¿Para qué lo necesitas?</option>
-          <option>Uso residencial / patio personal</option>
-          <option>Pizzería o restaurante</option>
-          <option>Negocio de catering / eventos</option>
-          <option>Otro uso</option>
+          <option value="Uso residencial / patio personal">Uso residencial / patio personal</option>
+          <option value="Pizzería o restaurante">Pizzería o restaurante</option>
+          <option value="Negocio de catering / eventos">Negocio de catering / eventos</option>
+          <option value="Otro uso">Otro uso</option>
         </select>
       </div>
-      <div class="fg"><label>Cuéntanos tu proyecto</label><textarea placeholder="¿Tienes espacio definido? ¿Necesitas instalación con grúa? ¿Decorado especial? Cualquier detalle nos ayuda a cotizar mejor..."></textarea></div>
-      <button class="btn-p" style="width:100%;padding:1.2rem;font-size:.9rem;margin-top:1rem;">Enviar solicitud de cotización</button>
-    </div>
+      <div class="fg"><label for="c-mensaje">Cuéntanos tu proyecto</label><textarea id="c-mensaje" name="mensaje" placeholder="¿Tienes espacio definido? ¿Necesitas instalación con grúa? ¿Decorado especial? Cualquier detalle nos ayuda a cotizar mejor..."></textarea></div>
+      <div id="form-status" class="form-status" role="status" aria-live="polite"></div>
+      <button id="cotizar-submit" type="submit" class="btn-p" style="width:100%;padding:1.2rem;font-size:.9rem;margin-top:1rem;">Enviar solicitud de cotización</button>
+    </form>
   </div>
 </section>
 
@@ -533,10 +540,9 @@ footer{padding:2.5rem 2.5rem;border-top:1px solid var(--border);display:flex;jus
   <div class="f-logo">Hornos Plumarejo</div>
   <div class="f-copy">© 2025 · Ing. Samuel Plumarejo Copado · RFC: PUCS860910BW9 · Monterrey, N.L.</div>
   <div class="f-links">
-    <a>Instagram</a>
-    <a>Facebook</a>
-    <a href="https://wa.me/528134575939" target="_blank">WhatsApp</a>
-    <a href="https://maps.app.goo.gl/qva3fmSia2y2hoKd7" target="_blank">Ver taller</a>
+    <a href="https://www.facebook.com/profile.php?id=61596467271293" target="_blank" rel="noopener noreferrer">Facebook</a>
+    <a href="https://wa.me/528134575939" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+    <a href="https://maps.app.goo.gl/qva3fmSia2y2hoKd7" target="_blank" rel="noopener noreferrer">Ver taller</a>
   </div>
 </footer>
 
@@ -585,6 +591,84 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.reveal').forEach(el => {
     observer.observe(el);
   });
+
+  // Envío doble respaldo: Netlify Forms + WhatsApp prellenado
+  const form = document.getElementById('cotizar-form');
+  const statusEl = document.getElementById('form-status');
+  const submitBtn = document.getElementById('cotizar-submit');
+  if (form && statusEl && submitBtn) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const nombre = (form.elements['nombre'].value || '').trim();
+      const telefono = (form.elements['telefono'].value || '').trim();
+      const correo = (form.elements['correo'].value || '').trim();
+      const modelo = (form.elements['modelo'].value || '').trim();
+      const uso = (form.elements['uso'].value || '').trim();
+      const mensaje = (form.elements['mensaje'].value || '').trim();
+
+      if (!nombre || !telefono) {
+        statusEl.style.display = 'block';
+        statusEl.className = 'form-status err';
+        statusEl.textContent = 'Por favor escribe tu nombre y teléfono/WhatsApp para poder cotizarte.';
+        return;
+      }
+
+      submitBtn.disabled = true;
+      const origText = submitBtn.textContent;
+      submitBtn.textContent = 'Enviando solicitud...';
+
+      const formData = new FormData(form);
+      formData.set('form-name', 'cotizacion');
+      const body = new URLSearchParams(formData).toString();
+
+      const waLines = [
+        'Hola Ing. Samuel, solicito cotización desde hornosplumarejo.com:',
+        `• Nombre: ${nombre}`,
+        `• Teléfono: ${telefono}`,
+        correo ? `• Correo: ${correo}` : '',
+        modelo ? `• Modelo: ${modelo}` : '',
+        uso ? `• Uso: ${uso}` : '',
+        mensaje ? `• Proyecto: ${mensaje}` : ''
+      ].filter(Boolean).join('\n');
+      const waUrl = `https://wa.me/528134575939?text=${encodeURIComponent(waLines)}`;
+
+      let netlifyOk = false;
+      try {
+        const resp = await fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body
+        });
+        netlifyOk = resp.ok;
+      } catch (_) {
+        netlifyOk = false;
+      }
+
+      statusEl.textContent = '';
+      const strong = document.createElement('strong');
+      strong.textContent = netlifyOk
+        ? '¡Solicitud registrada! Ya recibimos tus datos. '
+        : 'Completa tu envío por WhatsApp: ';
+      const link = document.createElement('a');
+      link.href = waUrl;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.style.color = 'var(--fire2)';
+      link.style.textDecoration = 'underline';
+      link.style.fontWeight = '700';
+      link.textContent = 'Abrir WhatsApp con tu cotización prellenada';
+      statusEl.appendChild(strong);
+      statusEl.appendChild(link);
+      statusEl.style.display = 'block';
+      statusEl.className = netlifyOk ? 'form-status ok' : 'form-status warn';
+
+      submitBtn.disabled = false;
+      submitBtn.textContent = origText;
+      if (netlifyOk) form.reset();
+
+      window.open(waUrl, '_blank', 'noopener,noreferrer');
+    });
+  }
 });
 </script>
 </body>
