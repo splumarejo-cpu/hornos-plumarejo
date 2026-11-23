@@ -555,7 +555,7 @@ footer{padding:2.5rem 2.5rem;border-top:1px solid var(--border);display:flex;jus
 <!-- FOOTER -->
 <footer>
   <div class="f-logo">Hornos Plumarejo</div>
-  <div class="f-copy">© 2025 · Hornos Plumarejo · Monterrey, N.L.</div>
+  <div class="f-copy">© 2026 · Hornos Plumarejo · Monterrey, N.L.</div>
   <div class="f-links">
     <a href="https://www.facebook.com/profile.php?id=61596467271293" target="_blank" rel="noopener noreferrer">Facebook</a>
     <a href="https://wa.me/528134575939" target="_blank" rel="noopener noreferrer">WhatsApp</a>
@@ -650,22 +650,25 @@ document.addEventListener('DOMContentLoaded', () => {
       const waUrl = `https://wa.me/528134575939?text=${encodeURIComponent(waLines)}`;
 
       let netlifyOk = false;
-      try {
-        const resp = await fetch('/', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body
-        });
-        netlifyOk = resp.ok;
-      } catch (_) {
-        netlifyOk = false;
+      const isNetlify = window.location.hostname.includes('netlify.app');
+      if (isNetlify) {
+        try {
+          const resp = await fetch('/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body
+          });
+          netlifyOk = resp.ok;
+        } catch (_) {
+          netlifyOk = false;
+        }
       }
 
       statusEl.textContent = '';
       const strong = document.createElement('strong');
       strong.textContent = netlifyOk
         ? '¡Solicitud registrada! Ya recibimos tus datos. '
-        : 'Completa tu envío por WhatsApp: ';
+        : '¡Cotización lista para WhatsApp! ';
       const link = document.createElement('a');
       link.href = waUrl;
       link.target = '_blank';
@@ -677,11 +680,11 @@ document.addEventListener('DOMContentLoaded', () => {
       statusEl.appendChild(strong);
       statusEl.appendChild(link);
       statusEl.style.display = 'block';
-      statusEl.className = netlifyOk ? 'form-status ok' : 'form-status warn';
+      statusEl.className = (netlifyOk || !isNetlify) ? 'form-status ok' : 'form-status warn';
 
       submitBtn.disabled = false;
       submitBtn.textContent = origText;
-      if (netlifyOk) form.reset();
+      if (netlifyOk || !isNetlify) form.reset();
 
       window.open(waUrl, '_blank', 'noopener,noreferrer');
     });
