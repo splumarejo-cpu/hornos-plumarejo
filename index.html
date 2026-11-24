@@ -232,15 +232,13 @@ footer{padding:2.5rem 2.5rem;border-top:1px solid var(--border);display:flex;jus
     <img src="assets/logo-frontal.webp" alt="Logo Hornos Plumarejo" style="height: 60px; width: auto;">
     <div class="nav-brand" style="display: none;">Hornos <span>Plumarejo</span></div>
   </div>
-  <div style="display:flex;align-items:center;gap:10px;">
-    <button type="button" id="bubaAccountTriggerBtn" title="Identifícate con Google o guarda tu Código Match" style="display:inline-flex;align-items:center;gap:6px;background:#fff;color:#111;border:0;border-radius:4px;padding:6px 11px;font-size:.75rem;font-weight:700;cursor:pointer;white-space:nowrap;">Google · Match</button>
-    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
-  </div>
+  <div class="menu-toggle" onclick="toggleMenu()">☰</div>
   <ul class="nav-links" id="nav-links">
     <li><a onclick="go('nosotros')" class="nav-item">Nosotros</a></li>
     <li><a onclick="go('modelos')" class="nav-item">Modelos</a></li>
     <li><a onclick="go('galeria')" class="nav-item">Galería</a></li>
     <li><a onclick="go('proceso')" class="nav-item">Proceso</a></li>
+    <li><button type="button" id="bubaAccountTriggerBtn" title="Identifícate con Google o guarda tu Código Match" style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.06);color:var(--cream);border:1px solid rgba(232,96,10,0.45);border-radius:2px;padding:.42rem .9rem;font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;cursor:pointer;white-space:nowrap;">Google · Match</button></li>
     <li><a class="nav-cta" onclick="go('contacto')">Cotizar</a></li>
   </ul>
 </nav>
@@ -714,6 +712,6 @@ document.addEventListener('DOMContentLoaded', () => {
   } catch (_) {}
 });
 </script>
-<script src="js/buba-identity.js?v=20261123_v27"></script>
+<script src="js/buba-identity.js?v=20261123_v28"></script>
 </body>
 </html>

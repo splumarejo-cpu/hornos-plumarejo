@@ -8,8 +8,7 @@
 
   var CFG = win.BUBA_IDENTITY_CONFIG = Object.assign({
     googleClientId: "255363114817-8e1k9l84b6kacg9nmb49b0sbdsakqm40.apps.googleusercontent.com",
-    // Cambiar a true en cuanto https://hornosplumarejo.com y https://www.hornosplumarejo.com se agreguen en Google Cloud
-    enableGoogleGsi: false
+    enableGoogleGsi: true
   }, win.BUBA_IDENTITY_CONFIG || {});
 
   var PROFILE_KEY = "hp_client_profile_v1";
@@ -187,10 +186,7 @@
             slot.textContent = "Cargando botón de Google...";
           }
         } else {
-          var notice = doc.createElement("div");
-          notice.style.cssText = "background:rgba(245,160,32,.12);border:1px solid rgba(245,160,32,.35);border-radius:8px;padding:9px 11px;font-size:12px;color:#F5F0E8;line-height:1.45;";
-          notice.textContent = "Guarda tu perfil abajo para autollenar tus cotizaciones con tu Código Match BUBA-" + p.clientId + ". (Para activar firma directa Google en hornosplumarejo.com solo agrega este dominio en Orígenes autorizados de Google Cloud).";
-          slot.appendChild(notice);
+          slot.textContent = "";
         }
       }
     }
@@ -341,6 +337,10 @@
           showIdentityToast("✓ ¡Cuenta Google conectada! " + (p.nombre || p.email) + " · Match BUBA-" + p.clientId);
         }
       });
+      var modal = doc.getElementById("bubaAccountModal");
+      if (modal && modal.style.display === "flex" && win._bubaRefreshAccountModal) {
+        win._bubaRefreshAccountModal();
+      }
       updateHeaderTrigger();
       renderInlineCards();
     };
