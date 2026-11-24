@@ -23,7 +23,7 @@
 <meta name="twitter:description" content="Hornos refractarios tipo napolitano construidos a mano en Monterrey. Híbridos gas/leña hasta 1,200°C, residenciales, comerciales y food trucks.">
 <meta name="twitter:image" content="https://hornosplumarejo.com/assets/og-hornos.jpg">
 <meta name="referrer" content="strict-origin-when-cross-origin">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self';">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://accounts.google.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob: https://*.googleusercontent.com; connect-src 'self' https://accounts.google.com; frame-src https://accounts.google.com; object-src 'none'; base-uri 'self'; form-action 'self';">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Lato:wght@300;400;700&display=swap');
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -232,7 +232,10 @@ footer{padding:2.5rem 2.5rem;border-top:1px solid var(--border);display:flex;jus
     <img src="assets/logo-frontal.webp" alt="Logo Hornos Plumarejo" style="height: 60px; width: auto;">
     <div class="nav-brand" style="display: none;">Hornos <span>Plumarejo</span></div>
   </div>
-  <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+  <div style="display:flex;align-items:center;gap:10px;">
+    <button type="button" id="bubaAccountTriggerBtn" title="Identifícate con Google o guarda tu Código Match" style="display:inline-flex;align-items:center;gap:6px;background:#fff;color:#111;border:0;border-radius:4px;padding:6px 11px;font-size:.75rem;font-weight:700;cursor:pointer;white-space:nowrap;">Google · Match</button>
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+  </div>
   <ul class="nav-links" id="nav-links">
     <li><a onclick="go('nosotros')" class="nav-item">Nosotros</a></li>
     <li><a onclick="go('modelos')" class="nav-item">Modelos</a></li>
@@ -521,6 +524,7 @@ footer{padding:2.5rem 2.5rem;border-top:1px solid var(--border);display:flex;jus
     <form id="cotizar-form" name="cotizacion" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="c-form reveal delay-2">
       <input type="hidden" name="form-name" value="cotizacion">
       <p hidden><label>No llenar: <input name="bot-field"></label></p>
+      <div data-buba-google-inline="1"></div>
       <div class="form-row">
         <div class="fg"><label for="c-nombre">Nombre</label><input id="c-nombre" name="nombre" type="text" placeholder="Tu nombre completo" required></div>
         <div class="fg"><label for="c-telefono">Teléfono / WhatsApp</label><input id="c-telefono" name="telefono" type="tel" placeholder="+52 81..." required></div>
@@ -644,6 +648,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const waLines = [
         'Hola, solicito cotización desde hornosplumarejo.com:',
+        ...(window.BubaIdentity ? window.BubaIdentity.formatMatchBullets() : []),
         `• Nombre: ${nombre}`,
         `• Teléfono: ${telefono}`,
         correo ? `• Correo: ${correo}` : '',
@@ -709,5 +714,6 @@ document.addEventListener('DOMContentLoaded', () => {
   } catch (_) {}
 });
 </script>
+<script src="js/buba-identity.js?v=20261123_v26"></script>
 </body>
 </html>
