@@ -547,6 +547,7 @@ footer{padding:2.5rem 2.5rem;border-top:1px solid var(--border);display:flex;jus
       </div>
       <div class="fg"><label for="c-mensaje">Cuéntanos tu proyecto</label><textarea id="c-mensaje" name="mensaje" placeholder="¿Tienes espacio definido? ¿Necesitas instalación con grúa? ¿Decorado especial? Cualquier detalle nos ayuda a cotizar mejor..."></textarea></div>
       <div id="form-status" class="form-status" role="status" aria-live="polite"></div>
+      <p style="font-size:.75rem;color:var(--muted);margin-top:.35rem;">Al enviar aceptas nuestro <a href="privacidad.html" style="color:var(--fire2);text-decoration:underline;">Aviso de Privacidad</a>.</p>
       <button id="cotizar-submit" type="submit" class="btn-p" style="width:100%;padding:1.2rem;font-size:.9rem;margin-top:1rem;">Enviar solicitud de cotización</button>
     </form>
   </div>
@@ -557,6 +558,7 @@ footer{padding:2.5rem 2.5rem;border-top:1px solid var(--border);display:flex;jus
   <div class="f-logo">Hornos Plumarejo</div>
   <div class="f-copy">© 2026 · Hornos Plumarejo · Monterrey, N.L.</div>
   <div class="f-links">
+    <a href="privacidad.html">Privacidad</a>
     <a href="https://www.facebook.com/profile.php?id=61596467271293" target="_blank" rel="noopener noreferrer">Facebook</a>
     <a href="https://wa.me/528134575939" target="_blank" rel="noopener noreferrer">WhatsApp</a>
     <a href="https://maps.app.goo.gl/qva3fmSia2y2hoKd7" target="_blank" rel="noopener noreferrer">Ver taller</a>
@@ -689,6 +691,20 @@ document.addEventListener('DOMContentLoaded', () => {
       window.open(waUrl, '_blank', 'noopener,noreferrer');
     });
   }
+  // Aviso discreto de cookies y privacidad (LFPDPPP)
+  try {
+    if (!localStorage.getItem('hp_cookie_consent_v1')) {
+      const cb = document.createElement('div');
+      cb.id = 'hpCookieBanner';
+      cb.style.cssText = 'position:fixed;left:16px;bottom:16px;z-index:950;max-width:360px;width:calc(100% - 96px);background:#140C05;color:#F5F0E8;border:1px solid rgba(232,96,10,0.45);border-radius:10px;padding:12px 14px;font-size:.78rem;line-height:1.45;box-shadow:0 12px 35px rgba(0,0,0,.6);';
+      cb.innerHTML = '<div style="font-weight:700;color:#F5A020;margin-bottom:4px;">Privacidad y Cookies</div><p style="margin:0 0 8px;color:#d6cdc2;">Usamos almacenamiento técnico para guardar tu preferencia. Consulta nuestro <a href="privacidad.html" style="color:#F5A020;text-decoration:underline;">Aviso de Privacidad</a>.</p><div style="display:flex;gap:8px;"><button type="button" id="hpCookieOk" style="background:#E8600A;color:#fff;border:0;border-radius:4px;padding:5px 10px;font-weight:700;cursor:pointer;font-size:.75rem;">Entendido</button></div>';
+      document.body.appendChild(cb);
+      document.getElementById('hpCookieOk').addEventListener('click', () => {
+        localStorage.setItem('hp_cookie_consent_v1', 'accepted');
+        cb.remove();
+      });
+    }
+  } catch (_) {}
 });
 </script>
 </body>
