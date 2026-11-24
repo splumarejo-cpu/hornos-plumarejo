@@ -217,6 +217,7 @@
       renderInlineCards();
       modal.style.display = "none";
       modal.setAttribute("aria-hidden", "true");
+      showIdentityToast("✓ Perfil vinculado · Código Match BUBA-" + p.clientId);
     });
 
     win._bubaOpenAccountModal = function () {
@@ -224,6 +225,35 @@
       modal.style.display = "flex";
       modal.setAttribute("aria-hidden", "false");
     };
+    win._bubaRefreshAccountModal = refreshModalBody;
+    win._bubaCloseAccountModal = function () {
+      modal.style.display = "none";
+      modal.setAttribute("aria-hidden", "true");
+    };
+  }
+
+  function showIdentityToast(msg) {
+    try {
+      var prev = doc.getElementById("bubaIdentityToast");
+      if (prev) prev.remove();
+      var toast = doc.createElement("div");
+      toast.id = "bubaIdentityToast";
+      toast.setAttribute("role", "status");
+      toast.style.cssText = "position:fixed;top:18px;right:18px;z-index:2000;max-width:390px;background:#052e16;color:#ecfdf5;border:2px solid #22c55e;border-radius:10px;padding:12px 16px;box-shadow:0 18px 42px rgba(0,0,0,.55);display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:13px;font-weight:700;line-height:1.4;";
+      var tx = doc.createElement("span");
+      tx.textContent = msg;
+      var cls = doc.createElement("button");
+      cls.type = "button";
+      cls.textContent = "✕";
+      cls.style.cssText = "background:transparent;border:0;color:#86efac;font-size:15px;font-weight:700;cursor:pointer;";
+      cls.addEventListener("click", function () { toast.remove(); });
+      toast.appendChild(tx);
+      toast.appendChild(cls);
+      doc.body.appendChild(toast);
+      setTimeout(function () {
+        if (toast && toast.parentNode) toast.remove();
+      }, 6500);
+    } catch (_) {}
   }
 
   function renderInlineCards() {
@@ -292,6 +322,7 @@
       if (!win.google || !win.google.accounts || !win.google.accounts.id) return;
       win.google.accounts.id.initialize({
         client_id: clientIdTrim,
+        ux_mode: "popup",
         callback: function (response) {
           var payload = decodeJwtPayload(response && response.credential);
           if (!payload || payload.aud !== clientIdTrim) return;
@@ -300,11 +331,14 @@
           p.googleSub = payload.sub || "";
           p.email = payload.email || p.email;
           p.nombre = payload.name || p.nombre;
-          p.verifiedGoogle = Boolean(payload.email_verified);
+          p.verifiedGoogle = (payload.email_verified !== false) && Boolean(payload.email || payload.sub);
           saveProfile(p);
           prefillFormsFromProfile();
           updateHeaderTrigger();
           renderInlineCards();
+          if (win._bubaRefreshAccountModal) win._bubaRefreshAccountModal();
+          if (win._bubaCloseAccountModal) win._bubaCloseAccountModal();
+          showIdentityToast("✓ ¡Cuenta Google conectada! " + (p.nombre || p.email) + " · Match BUBA-" + p.clientId);
         }
       });
       updateHeaderTrigger();
